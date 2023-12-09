@@ -1,0 +1,31 @@
+GET http://localhost:5005/api/keys
+
+###
+GET http://localhost:5005/api/get-otp
+
+###
+POST http://localhost:5005/api/send-api
+Content-Type: application/json
+
+{
+    "api": "http://localhost:3000/bayanno/home"
+}
+
+
+###
+POST http://localhost:5005/api/save-encrypted-data
+Content-Type: application/json
+
+{
+   "name": "ahshgd",
+   "email": "shhjdhsmsjsajs"
+}
+
+###
+POST http://localhost:5005/api/save-encrypted-data
+Content-Type: application/json
+
+{
+   "file": "ahshgd",
+}
+
