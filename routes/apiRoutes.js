@@ -6,8 +6,6 @@ const userDataModel = require("../database-model/userData");
 const algorithm = "aes-256-cbc";
 const iv = crypto.randomBytes(16);
 
-const cipher = crypto.createCipheriv(algorithm, process.env.ENCRYPT_KEY, iv);
-
 const router = express.Router();
 
 router.get("/keys", (request, response) => {
@@ -117,22 +115,9 @@ router.post("/save-encrypted-data", async (request, response) => {
   try {
     const { name, email } = request.body;
 
-    let encryptedName = cipher.update(name, "utf-8", "hex");
-    encryptedName += cipher.final("hex");
-
-    // const nameBase64 = Buffer.from(encryptedName).toString("base64");
-
-    const ivBase64 = Buffer.from(iv, "binary").toString("base64");
-
-    let encryptedEmail = cipher.update(email, "utf-8", "hex");
-    encryptedEmail += cipher.final("hex");
-
-    // const emailBase64 = Buffer.from(encryptedEmail).toString("base64");
-
     const user = new userDataModel({
-      name: encryptedName,
-      email: encryptedEmail,
-      iv: ivBase64,
+      name: name,
+      email: email,
     });
 
     await user.save();
@@ -140,6 +125,15 @@ router.post("/save-encrypted-data", async (request, response) => {
     return response.status(200).json({ message: "Data Saved Successfully" });
   } catch (error) {
     console.log(error.message);
+    return response.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/get-user-data", async (request, response) => {
+  try {
+    const data = await userDataModel.find().lean({ getters: true });
+    return response.status(200).json({ data: data });
+  } catch (error) {
     return response.status(500).json({ message: error.message });
   }
 });

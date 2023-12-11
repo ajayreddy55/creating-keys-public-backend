@@ -17,8 +17,8 @@ POST http://localhost:5005/api/save-encrypted-data
 Content-Type: application/json
 
 {
-   "name": "ahshgd",
-   "email": "shhjdhsmsjsajs"
+   "name": "ahshggh",
+   "email": "shhjdhsmsjsdfs"
 }
 
 ###
@@ -28,4 +28,7 @@ Content-Type: application/json
 {
    "file": "ahshgd",
 }
+
+###
+GET http://localhost:5005/api/get-user-data
 
