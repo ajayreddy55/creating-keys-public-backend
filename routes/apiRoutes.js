@@ -131,7 +131,7 @@ router.post("/save-encrypted-data", async (request, response) => {
 
 router.get("/get-user-data", async (request, response) => {
   try {
-    const data = await userDataModel.find().lean({ getters: true });
+    const data = await userDataModel.find();
     return response.status(200).json({ data: data });
   } catch (error) {
     return response.status(500).json({ message: error.message });
